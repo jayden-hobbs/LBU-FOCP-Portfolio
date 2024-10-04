@@ -6,6 +6,6 @@ if __name__ == '__main__':
     sweets_per_student = numberSweets//numberStudents
     leftOver = numberStudents % numberSweets
     if leftOver == 1:
-        print(f'Each student recieves {sweets_per_student} and there will be 1 sweet left over.')
+        print(f'Each student receives {sweets_per_student} and there will be 1 sweet left over.')
     else:
-        print(f'Each student recieves {sweets_per_student} and there will be {leftOver} sweets left over.')
+        print(f'Each student receives {sweets_per_student} and there will be {leftOver} sweets left over.')
