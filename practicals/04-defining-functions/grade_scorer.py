@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# THIS WAS COPIED FROM THE BOARD. THIS PROGRAM WAS CREATED BY TONY
 
 from statistics import mean
 
