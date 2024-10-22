@@ -4,8 +4,5 @@ def get_name():
     input_name = str(input("Enter your name: "))
     print(f'{input_name.capitalize()}')
 
-
-
-
-
-get_name()
+if __name__ == '__main__':
+    get_name()
