@@ -3,15 +3,15 @@
 import requests
 
 if __name__ == '__main__':
+    url = str(input("Enter a URL: "))
+    status_codes = {}
+    with open('C:/Users/Seagu/OneDrive - Leeds Beckett University/Computer Programming/Visual Studio Code/programming-portfolio-jayden-hobbs/practicals/05-scripts-and-modules/status_codes.txt', 'r') as file:
+        for line in file:
+            parts = line.split().split(' ', 1)
+            if len == 2:
+                code, message = parts
+                status_codes[int(code)] = message
 
-    try:
-        url = input('Enter a URL: ')
-        response = requests.get(url)
-        if response.status_code == 200:
-            print('Success!')
-        elif response.status_code == 404:
-            print('Not Found.')
-        else:
-            print(f'Something went wrong. The response is {response.status_code}')
-    except requests.exceptions.MissingSchema or requests.exceptions.InvalidSchema or requests.exceptions.InvalidURL:
-        print('Invalid URL')
+    response = requests.get(url)
+    status_message = status_codes.get(response.status_code, f'Unknown status code: {response.status_code}')
+    print(f'The status code is: {response.status_code} - {status_message}')
