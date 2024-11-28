@@ -1,20 +1,20 @@
-1,VER,Max Verstappen,Red Bull Racing
-2,SAR,Logan Sargeant,Williams
-3,RIC,Daniel Ricciardo,RB
-4,NOR,Lando Norris,McLaren
-10,GAS,Pierre Gasly,Alpine
-11,PER,Sergio Perez,Red Bull Racing
-14,ALO,Fernando Alonso,Aston Martin Racing
-16,LEC,Charles Leclerc,Ferrari
-18,STR,Lance Stroll,Aston Martin Racing
-20,MAG,Kevin Magnussen,Haas
-22,TSU,Yuki Tsunoda,RB
-23,ALB,Alex Albon,Williams
-24,ZHO,Zhou Guanyu,Kick Sauber
-27,HUL,Niko Hulkenberg,Haas
-31,OCO,Esteban Ocon,Alpine
-44,HAM,Lewis Hamilton,Mercedes
-55,SAI,Carlos Sainz,Ferrari
-63,RUS,George Russell,Mercedes
-77,BOT,Valtteri Bottas,Kick Sauber
-81,PIA,Oscar Piastri,McLaren
+1,VER,Max Verstappen,Red Bull Racing,NED
+2,SAR,Logan Sargeant,Williams,USA
+3,RIC,Daniel Ricciardo,RB,AUS
+4,NOR,Lando Norris,McLaren,ENG
+10,GAS,Pierre Gasly,Alpine,FRA
+11,PER,Sergio Perez,Red Bull Racing,MEX
+14,ALO,Fernando Alonso,Aston Martin Racing,ESP
+16,LEC,Charles Leclerc,Ferrari,MON
+18,STR,Lance Stroll,Aston Martin Racing,CAN
+20,MAG,Kevin Magnussen,Haas,DEN
+22,TSU,Yuki Tsunoda,RB,JPN
+23,ALB,Alex Albon,Williams,THA
+24,ZHO,Zhou Guanyu,Kick Sauber,CHN
+27,HUL,Niko Hulkenberg,Haas,GER
+31,OCO,Esteban Ocon,Alpine,FRA
+44,HAM,Lewis Hamilton,Mercedes,ENG
+55,SAI,Carlos Sainz,Ferrari,ESP
+63,RUS,George Russell,Mercedes,ENG
+77,BOT,Valtteri Bottas,Kick Sauber,FIN
+81,PIA,Oscar Piastri,McLaren,AUS
