@@ -4,7 +4,7 @@ from collections import Counter
 
 def most_common_letters(message):
     message = message.lower()
-    return Counter(message).most_common(6)
+    return Counter(message).most_common(3)
 
 message = str(input("Enter a message: "))
 print(most_common_letters(message))
