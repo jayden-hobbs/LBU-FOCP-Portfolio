@@ -6,3 +6,5 @@ if __name__ == '__main__':
         for line_number, line in enumerate(file, 1):
             print(f"{line_number}\t{line.strip()}")
 
+
+
