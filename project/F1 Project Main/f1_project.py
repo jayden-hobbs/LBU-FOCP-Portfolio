@@ -245,9 +245,48 @@ def drivers_average_time():
     headers = ["Name", "Code", "Nationality", "Team", "Average Lap Time (s)"]
     print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
-
-    
+def driver_lap_times():
+    while True:
+        try:
+            raceChoice = int(input("Please select which race you would like to view drivers lap times for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) ~ "))
+            if raceChoice == 1:
+                filename = "lap_times_1.txt"
+                print("The fastest lap for each driver in Dewsbury Race 1 is...")
+                break
+            elif raceChoice == 2:
+                filename = "lap_times_2.txt"
+                print("The fastest lap for each driver in Dewsbury Race 2 is...")
+                break
+            elif raceChoice == 3:
+                filename = "lap_times_3.txt"
+                print("The fastest lap for each driver in York is...")
+                break
+            else:
+                print("Invalid choice. Please select either 1, 2, or 3.")
         
+        except ValueError:
+            print("Invalid input! Please enter a valid number (1, 2, or 3).")
+    
+    while True:
+        try:
+            driverChoice = input("Please enter the driver code you would like to view lap times for: ")
+            driver = f1_driver.get_driver_by_code(driverChoice)
+            if driver:
+                break
+            else:
+                print("Driver not found. Please try again.")
+        except ValueError:
+            print("Invalid input! Please enter a valid driver code.")
+    
+    with open(filename, 'r') as file:
+        next(file)
+        for line in file:
+            driver = str(line[:3])
+            lap_time = float(line[3:].strip())
+            if driver == driverChoice:
+                print(f"{driver} completed a lap in {lap_time} seconds")
+    
+       
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="F1 Driver Management System")
@@ -264,7 +303,8 @@ if __name__ == "__main__":
         print("4. View the lap standings for each race")
         print("5. View the fastest lap for each driver in each race")
         print("6. View the average lap time for each driver in each race")
-        print("7. Exit")
+        print("7. View lap times for a specific driver")
+        print("8. Exit")
         
         try:
             choice = int(input("Enter your choice ~ "))
@@ -282,6 +322,8 @@ if __name__ == "__main__":
             elif choice == 6:
                 drivers_average_time()
             elif choice == 7:
+                driver_lap_times()
+            elif choice == 8:
                 print("Exiting...")
                 sys.exit()
             else:
