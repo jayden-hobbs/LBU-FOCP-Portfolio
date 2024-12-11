@@ -278,13 +278,22 @@ def driver_lap_times():
         except ValueError:
             print("Invalid input! Please enter a valid driver code.")
     
+    lap_data = []
     with open(filename, 'r') as file:
         next(file)
+        lap_number = 1
         for line in file:
             driver = str(line[:3])
             lap_time = float(line[3:].strip())
             if driver == driverChoice:
-                print(f"{driver} completed a lap in {lap_time} seconds")
+                lap_data.append((lap_number, lap_time))
+                lap_number += 1
+
+    if lap_data:
+        headers = ["Lap Number", "Lap Time"]
+        print(tabulate(lap_data, headers=headers, tablefmt="fancy_grid"))
+    else:
+        print("Driver has no lap times for selected race")
     
        
 if __name__ == "__main__":
