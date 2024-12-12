@@ -48,8 +48,14 @@ def create_drivers(file_path):
         print(f"An error occurred: {e}")
 
 def print_drivers():
+    drivers = []
     for driver in f1_driver.all_drivers:
-        print(f"Driver {driver.name} with number {driver.number} is from {driver.nationality} and drives for {driver.team}")
+        if driver:
+            drivers.append([driver.number, driver.code, driver.name, driver.team, driver.nationality])
+        else:
+            print("No drivers found")
+    headers=["Number", "Code", "Name", "Team", "Nationality"]
+    print(tabulate(drivers, headers=headers, tablefmt="fancy_grid"))
 
 def fastest_lap_of_race():
     while True:
@@ -58,15 +64,15 @@ def fastest_lap_of_race():
             
             if choice == 1:
                 filename = "lap_times_1.txt"
-                print("Dewsbury Race 1 Fastest Lap is...")
+                print("Dewsbury Race 1 Fastest Lap is...  \n")
                 break
             elif choice == 2:
                 filename = "lap_times_2.txt"
-                print("Dewsbury Race 2 Fastest Lap is...")
+                print("Dewsbury Race 2 Fastest Lap is... \n")
                 break
             elif choice == 3:
                 filename = "lap_times_3.txt"
-                print("York Fastest Lap is...")
+                print("York Fastest Lap is... \n")
                 break
             else:
                 print("Invalid choice. Please select either 1, 2, or 3")
@@ -87,7 +93,7 @@ def fastest_lap_of_race():
                 fastest_time = lap_time
                 fastest_driver = driver
 
-    print(f"{fastest_driver} with a time of {fastest_time}")
+    print(f"{fastest_driver} with a time of {fastest_time} \n")
 
 def average_times():
     while True:
