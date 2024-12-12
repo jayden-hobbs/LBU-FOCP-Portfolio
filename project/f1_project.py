@@ -57,6 +57,19 @@ def print_drivers():
     headers=["Number", "Code", "Name", "Team", "Nationality"]
     print(tabulate(drivers, headers=headers, tablefmt="fancy_grid"))
 
+from tabulate import tabulate
+
+class f1_driver:
+    all_drivers = []
+
+    def __init__(self, driver_number, code, name, team, nationality):
+        self.number = driver_number
+        self.code = code
+        self.name = name
+        self.team = team
+        self.nationality = nationality
+        f1_driver.all_drivers.append(self)
+
 def fastest_lap_of_race():
     while True:
         try:
@@ -87,13 +100,29 @@ def fastest_lap_of_race():
     with open(filename, 'r') as file:
         next(file)
         for line in file:
-            driver = str(line[:3])
+            driver_code = str(line[:3].strip())
             lap_time = float(line[3:].strip())
-            if lap_time is not None and lap_time < fastest_time:
+            
+            if lap_time < fastest_time:
                 fastest_time = lap_time
-                fastest_driver = driver
+                fastest_driver = driver_code
 
-    print(f"{fastest_driver} with a time of {fastest_time} \n")
+    driver_details = None
+    for driver in f1_driver.all_drivers:
+        if driver.code == fastest_driver:
+            driver_details = driver
+            break
+
+    if driver_details:
+        driver_data = [
+            ["Driver", "Code", "Number", "Team", "Nationality"],
+            [driver_details.name, driver_details.code, driver_details.number, driver_details.team, driver_details.nationality]
+        ]
+        
+        print(tabulate(driver_data, headers="firstrow", tablefmt="grid"))
+    else:
+        print("No driver found for the fastest lap.")
+
 
 def average_times():
     while True:
