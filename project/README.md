@@ -1,8 +1,7 @@
 # Programming Project
 
-Use this folder for your project work.
-
-Remember that you can submit a basic attempt at both projects (in which case they should obviously be in separate folders), or a more fully featured version of just one.
-
-*You may want to replace the contents of this ``README.md`` with a description of your project work.*
-it - 
+I have selected to do the F1 Project properly as my project code.
+The code does several things:
+    1. Runs the main program which acts as the main menu. The user enters a number based on their choice.
+    2. After the user selects the part of the program they want to run, they will select the race and driver if applicable and the      relavent data will be outputed using tabulate
+    3. The user can exit the program any time
