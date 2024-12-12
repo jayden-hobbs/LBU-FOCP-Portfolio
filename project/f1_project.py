@@ -374,8 +374,3 @@ if __name__ == "__main__":
                 print("Invalid choice. Please select a number between 1 and 7.")
         except ValueError:
             print("Invalid input! Please enter a valid number.")
-
-                                                                                           
-
-
-
