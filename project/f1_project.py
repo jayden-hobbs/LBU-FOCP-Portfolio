@@ -242,9 +242,6 @@ def get_team_times(filename):
     except (ValueError, IndexError):
         print("Invalid input! Please select a valid team number.")
 
-
-
-
 def get_file():
     files = os.listdir()
     excluded_files = ["f1_drivers.txt", "requirements.txt"]
@@ -268,56 +265,29 @@ def get_file():
                 try:
                     with open(filename, 'r') as file:
                         lines = file.readlines()
-                        if len(lines) <= 1:
+
+                        lines_with_data = sum(1 for line in lines if line.strip() != '')
+
+                        if lines_with_data <= 1:
                             print(f"The file {filename} is empty or contains no lap times.")
-                            return None
+                            
+                        else:
+                            return filename
+                            break
+                        
                 except Exception as e:
                     print(f"Error reading the file: {e}")
                     return None
-                
-                return filename
             else:
                 print("Invalid choice. Please select a valid file number.")
+                continue
         
         except ValueError:
             print("Invalid input! Please enter a valid number.")
+            continue
 
 
-def change_file():
-    files = os.listdir()
-    excluded_files = ["f1_drivers.txt", "requirements.txt"]
-    txt_files = [file for file in files if file.endswith(".txt") and file not in excluded_files]
-    
-    if not txt_files:
-        print("No valid .txt files found in the current directory.")
-        return None
 
-    print("The following files are available:")
-    for index, file in enumerate(txt_files, 1):
-        print(f"{index}. {file}")
-
-    while True:
-        try:
-            choice = int(input("Please select the file you would like to use: "))
-            if 1 <= choice <= len(txt_files):
-                filename = txt_files[choice - 1]
-                print(f"You selected: {filename}")
-
-                try:
-                    with open(filename, 'r') as file:
-                        lines = file.readlines()
-                        if len(lines) <= 1:
-                            print(f"The file {filename} is empty or contains no lap times.")
-                            return None
-                except Exception as e:
-                    print(f"Error reading the file: {e}")
-                    return None
-                
-                return filename
-            else:
-                print("Invalid choice. Please select a valid file number.")
-        except ValueError:
-            print("Invalid input! Please enter a valid number.")
 
 
 if __name__ == "__main__":
@@ -340,8 +310,8 @@ if __name__ == "__main__":
         print("5. View the fastest lap for each driver in the file")
         print("6. View the average lap time for each driver in the file")
         print("7. View lap times for a specific driver")
-        print("8. Change the race data file")
-        print("9. View lap times for a specific team")
+        print("8. View all laps for a specific team")
+        print("9. Change the race data file")
         print("x. Exit")
         
         try:
@@ -362,12 +332,12 @@ if __name__ == "__main__":
             elif choice == "7":
                 driver_lap_times(filename)
             elif choice == "8":
-                filename = change_file()
+                get_team_times(filename)
+            elif choice == "9":
+                filename = get_file()
                 if filename is None:
                     print("No valid files available to select.")
                     continue
-            elif choice == "9":
-                get_team_times(filename)
             elif choice == "x":
                 print("Exiting...")
                 sys.exit()
