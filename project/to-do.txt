@@ -1,0 +1,3 @@
+# change it so lap times open from terminal - try except blocks if file is empty or only 1 line
+# output team results and get fastest driver
+# shorten and fix the code up

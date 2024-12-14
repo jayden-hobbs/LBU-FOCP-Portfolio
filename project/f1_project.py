@@ -221,12 +221,24 @@ def get_file():
             if 1 <= choice <= len(txt_files):  
                 filename = txt_files[choice - 1]
                 print(f"You selected: {filename}")
+
+                try:
+                    with open(filename, 'r') as file:
+                        lines = file.readlines()
+                        if len(lines) <= 1:
+                            print(f"The file {filename} is empty or contains no lap times.")
+                            return None
+                except Exception as e:
+                    print(f"Error reading the file: {e}")
+                    return None
+                
                 return filename
             else:
                 print("Invalid choice. Please select a valid file number.")
         
         except ValueError:
             print("Invalid input! Please enter a valid number.")
+
 
 def change_file():
     files = os.listdir()
@@ -247,11 +259,23 @@ def change_file():
             if 1 <= choice <= len(txt_files):
                 filename = txt_files[choice - 1]
                 print(f"You selected: {filename}")
+
+                try:
+                    with open(filename, 'r') as file:
+                        lines = file.readlines()
+                        if len(lines) <= 1:
+                            print(f"The file {filename} is empty or contains no lap times.")
+                            return None
+                except Exception as e:
+                    print(f"Error reading the file: {e}")
+                    return None
+                
                 return filename
             else:
                 print("Invalid choice. Please select a valid file number.")
         except ValueError:
             print("Invalid input! Please enter a valid number.")
+
 
 
 if __name__ == "__main__":
