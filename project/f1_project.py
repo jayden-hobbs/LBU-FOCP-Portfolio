@@ -202,6 +202,49 @@ def driver_lap_times(filename):
     else:
         print("Driver has no lap times for the selected race.")
 
+def get_team_times(filename):
+    teams = ["Red Bull Racing", "Mercedes", "Ferrari", "McLaren", "Aston Martin", "Alpine", "RB", "Kick Sauber", "Haas", "Williams"]
+    for index, team in enumerate(teams, 1):
+        print(f"{index}. {team}")
+    
+    try:
+        team = teams[int(input("Select the team number: ")) - 1]
+        team_lap_times = []
+
+        drivers_in_team = {driver.code: driver for driver in f1_driver.all_drivers if driver.team.strip() == team.strip()}
+
+        if not drivers_in_team:
+            print(f"No drivers found for {team}")
+            return
+
+        driver_lap_counts = {driver.code: 0 for driver in drivers_in_team.values()}
+
+        with open(filename, 'r') as file:
+            next(file)
+            for line in file:
+                driver_code, lap_time_str = line[:3].strip(), line[3:].strip()
+                try:
+                    lap_time = float(lap_time_str)
+                except ValueError:
+                    continue
+
+                if driver_code in drivers_in_team:
+                    driver = drivers_in_team[driver_code]
+                    driver_lap_counts[driver_code] += 1
+                    lap_number = driver_lap_counts[driver_code]
+                    team_lap_times.append((driver.name, driver.code, driver.team, lap_number, lap_time))
+
+        if team_lap_times:
+            print(tabulate(team_lap_times, headers=["NAME", "CODE", "TEAM", "DRIVER LAP NUMBER", "LAP TIME (S)"], tablefmt="fancy_grid"))
+        else:
+            print(f"No lap times found for {team}")
+    
+    except (ValueError, IndexError):
+        print("Invalid input! Please select a valid team number.")
+
+
+
+
 def get_file():
     files = os.listdir()
     excluded_files = ["f1_drivers.txt", "requirements.txt"]
@@ -277,7 +320,6 @@ def change_file():
             print("Invalid input! Please enter a valid number.")
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="F1 Driver Management System")
     parser.add_argument("file_path", help="Path to the file containing driver data")
@@ -299,31 +341,34 @@ if __name__ == "__main__":
         print("6. View the average lap time for each driver in the file")
         print("7. View lap times for a specific driver")
         print("8. Change the race data file")
-        print("9. Exit")
+        print("9. View lap times for a specific team")
+        print("x. Exit")
         
         try:
-            choice = int(input("Enter your choice ~ "))
+            choice = input("Enter your choice ~ ")
             
-            if choice == 1:
+            if choice == "1":
                 print_drivers()
-            elif choice == 2:
+            elif choice == "2":
                 fastest_lap_of_race(filename)
-            elif choice == 3:
+            elif choice == "3":
                 average_times(filename)
-            elif choice == 4:
+            elif choice == "4":
                 lap_standings(filename)
-            elif choice == 5:
+            elif choice == "5":
                 drivers_fastest_lap(filename)
-            elif choice == 6:
+            elif choice == "6":
                 drivers_average_time(filename)
-            elif choice == 7:
+            elif choice == "7":
                 driver_lap_times(filename)
-            elif choice == 8:
+            elif choice == "8":
                 filename = change_file()
                 if filename is None:
                     print("No valid files available to select.")
                     continue
-            elif choice == 9:
+            elif choice == "9":
+                get_team_times(filename)
+            elif choice == "x":
                 print("Exiting...")
                 sys.exit()
             else:
