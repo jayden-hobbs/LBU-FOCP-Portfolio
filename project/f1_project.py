@@ -4,6 +4,7 @@ import argparse
 from tabulate import tabulate
 import sys
 from collections import defaultdict
+import os
 
 class f1_driver:
     all_drivers = []
@@ -14,13 +15,19 @@ class f1_driver:
         self.name = name
         self.team = team
         self.nationality = nationality
-        
         f1_driver.all_drivers.append(self)
 
     @classmethod
     def get_driver_by_code(cls, code):
         for driver in cls.all_drivers:
-            if driver.code == code:
+            if driver.code.strip() == code.strip():
+                return driver
+        return None
+
+    @classmethod
+    def get_team_by_team(cls, team):
+        for driver in cls.all_drivers:
+            if driver.team.strip() == team.strip():
                 return driver
         return None
 
@@ -54,129 +61,58 @@ def print_drivers():
             drivers.append([driver.number, driver.code, driver.name, driver.team, driver.nationality])
         else:
             print("No drivers found")
-    headers=["Number", "Code", "Name", "Team", "Nationality"]
+    headers=["NUMBER", "CODE", "NAME", "TEAM", "NATIONALITY"]
     print(tabulate(drivers, headers=headers, tablefmt="fancy_grid"))
 
-from tabulate import tabulate
-
-class f1_driver:
-    all_drivers = []
-
-    def __init__(self, driver_number, code, name, team, nationality):
-        self.number = driver_number
-        self.code = code
-        self.name = name
-        self.team = team
-        self.nationality = nationality
-        f1_driver.all_drivers.append(self)
-
-def fastest_lap_of_race():
-    while True:
-        try:
-            choice = int(input("Please select which race you would like to view the fastest lap for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) ~ "))
-            
-            if choice == 1:
-                filename = "lap_times_1.txt"
-                print("Dewsbury Race 1 Fastest Lap is...  \n")
-                break
-            elif choice == 2:
-                filename = "lap_times_2.txt"
-                print("Dewsbury Race 2 Fastest Lap is... \n")
-                break
-            elif choice == 3:
-                filename = "lap_times_3.txt"
-                print("York Fastest Lap is... \n")
-                break
-            else:
-                print("Invalid choice. Please select either 1, 2, or 3")
-                continue
-        except ValueError:
-            print("Invalid input! Please enter a valid number (1, 2, or 3).")
-            continue
-
+def fastest_lap_of_race(filename):
     fastest_driver = None
     fastest_time = float('inf')
 
-    with open(filename, 'r') as file:
-        next(file)
-        for line in file:
-            driver_code = str(line[:3].strip())
-            lap_time = float(line[3:].strip())
-            
-            if lap_time < fastest_time:
-                fastest_time = lap_time
-                fastest_driver = driver_code
+    try:
+        with open(filename, 'r') as file:
+            next(file)
+            for line in file:
+                driver_code = line[:3].strip()
+                lap_time_str = line[3:].strip()
 
-    driver_details = None
-    for driver in f1_driver.all_drivers:
-        if driver.code == fastest_driver:
-            driver_details = driver
-            break
+                try:
+                    lap_time = float(lap_time_str)
+                except ValueError:
+                    print(f"Skipping invalid line: {line.strip()}")
+                    continue
 
-    if driver_details:
-        driver_data = [
-            ["Driver", "Code", "Number", "Team", "Nationality"],
-            [driver_details.name, driver_details.code, driver_details.number, driver_details.team, driver_details.nationality]
-        ]
-        
-        print(tabulate(driver_data, headers="firstrow", tablefmt="grid"))
+                if lap_time < fastest_time:
+                    fastest_time = lap_time
+                    fastest_driver = driver_code
+
+    except FileNotFoundError:
+        print(f"Error: The file {filename} was not found.")
+        return
+    except Exception as e:
+        print(f"An error occurred while processing the file: {e}")
+        return
+
+    if fastest_driver:
+        driver_details = f1_driver.get_driver_by_code(fastest_driver)
+        if driver_details:
+            driver_data = [
+                ["DRIVER", "CODE", "NUMBER", "TEAM", "NATIONALITY", "TIME"],
+                [driver_details.name, driver_details.code, driver_details.number, driver_details.team, driver_details.nationality, fastest_time]
+            ]
+            print(tabulate(driver_data, headers="firstrow", tablefmt="grid"))
+        else:
+            print(f"No driver found for the fastest lap: {fastest_driver}")
     else:
-        print("No driver found for the fastest lap.")
+        print("No valid lap times found.")
 
-
-def average_times():
-    while True:
-        try:
-            choice = int(input("Please select which race you would like to view the average lap time for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) "))
-            
-            if choice == 1:
-                filename = "lap_times_1.txt"
-                print("Dewsbury Race 1 Average Lap Time is...")
-                break
-            elif choice == 2:
-                filename = "lap_times_2.txt"
-                print("Dewsbury Race 2 Average Lap Time is...")
-                break
-            elif choice == 3:
-                filename = "lap_times_3.txt"
-                print("York Average Lap Time is...")
-                break
-            else:
-                print("Invalid choice. Please select either 1, 2, or 3.")
-        
-        except ValueError:
-            print("Invalid input! Please enter a valid number (1, 2, or 3).")
-
+def average_times(filename):
     with open(filename, 'r') as file:
         next(file)
         lap_times = [float(line[3:].strip()) for line in file]
         average_time = round(sum(lap_times) / len(lap_times), 3)
         print(f"{average_time} seconds")
 
-
-def lap_standings():
-    while True:
-        try:
-            choice = int(input("Please select which race you would like to view the lap standings for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) ~ "))
-            
-            if choice == 1:
-                filename = "lap_times_1.txt"
-                print("Dewsbury Race 1 Lap Standings:")
-                break
-            elif choice == 2:
-                filename = "lap_times_2.txt"
-                print("Dewsbury Race 2 Lap Standings:")
-                break
-            elif choice == 3:
-                filename = "lap_times_3.txt"
-                print("York Lap Standings:")
-                break
-            else:
-                print("Invalid choice. Please select either 1, 2, or 3.")
-        
-        except ValueError:
-            print("Invalid input! Please enter a valid number (1, 2, or 3).")
-
+def lap_standings(filename):
     lap_times = []
     with open(filename, 'r') as file:
         next(file)
@@ -187,33 +123,10 @@ def lap_standings():
 
     lap_times.sort(key=lambda x: x[1])
     table_data = [(index + 1, driver, time) for index, (driver, time) in enumerate(lap_times)]
-    headers = ["Position", "Driver", "Time"]
+    headers = ["POSITION", "DRIVER", "TIME"]
     print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
-
-def drivers_fastest_lap():
-    while True:
-        try:
-            choice = int(input("Please select which race you would like to view each driver's fastest lap for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) ~ "))
-            
-            if choice == 1:
-                filename = "lap_times_1.txt"
-                print("The fastest lap for each driver in Dewsbury Race 1 is...")
-                break
-            elif choice == 2:
-                filename = "lap_times_2.txt"
-                print("The fastest lap for each driver in Dewsbury Race 2 is...")
-                break
-            elif choice == 3:
-                filename = "lap_times_3.txt"
-                print("The fastest lap for each driver in York is...")
-                break
-            else:
-                print("Invalid choice. Please select either 1, 2, or 3.")
-        
-        except ValueError:
-            print("Invalid input! Please enter a valid number (1, 2, or 3).")
-
+def drivers_fastest_lap(filename):
     fastest_laps = defaultdict(lambda: float('inf'))
     with open(filename, 'r') as file:
         next(file)
@@ -232,33 +145,13 @@ def drivers_fastest_lap():
         else:
             print(f"Driver with code {driver_code} not found")
 
-    headers = ["Name", "Code", "Nationality", "Team", "Fastest Lap Time (s)"]
+    table_data.sort(key=lambda x: x[4])
+
+    headers = ["NAME", "CODE", "NATIONALITY", "TEAM", "FASTEST LAP TIME (S)"]
     print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
 
-def drivers_average_time():
-    while True:
-        try:
-            choice = int(input("Please select which race you would like to view each driver's average lap time for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) ~ "))
-            
-            if choice == 1:
-                filename = "lap_times_1.txt"
-                print("The average lap time for each driver in Dewsbury Race 1 is...")
-                break
-            elif choice == 2:
-                filename = "lap_times_2.txt"
-                print("The average lap time for each driver in Dewsbury Race 2 is...")
-                break
-            elif choice == 3:
-                filename = "lap_times_3.txt"
-                print("The average lap time for each driver in York is...")
-                break
-            else:
-                print("Invalid choice. Please select either 1, 2, or 3.")
-        
-        except ValueError:
-            print("Invalid input! Please enter a valid number (1, 2, or 3).")
-
+def drivers_average_time(filename):
     lap_times = defaultdict(lambda: {'total_time': 0, 'num_laps': 0})
     with open(filename, 'r') as file:
         next(file)
@@ -273,35 +166,14 @@ def drivers_average_time():
         average_time = data['total_time'] / data['num_laps']
         driver = f1_driver.get_driver_by_code(driver_code)
         if driver:
-            table_data.append((driver.name, driver.code, driver.nationality, driver.team, average_time))   
-        else:
-            print(f"Driver with code {driver_code} not found")
+            table_data.append((driver.name, driver.code, driver.nationality, driver.team, average_time))
+
+    table_data.sort(key=lambda x: x[4])   
     
-    headers = ["Name", "Code", "Nationality", "Team", "Average Lap Time (s)"]
+    headers = ["NAME", "CODE", "NATIONALITY", "TEAM", "AVERAGE LAP TIME (S)"]
     print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
-def driver_lap_times():
-    while True:
-        try:
-            raceChoice = int(input("Please select which race you would like to view drivers lap times for: Dewsbury Race 1 (1), Dewsbury Race 2 (2) or York (3) ~ "))
-            if raceChoice == 1:
-                filename = "lap_times_1.txt"
-                print("The fastest lap for each driver in Dewsbury Race 1 is...")
-                break
-            elif raceChoice == 2:
-                filename = "lap_times_2.txt"
-                print("The fastest lap for each driver in Dewsbury Race 2 is...")
-                break
-            elif raceChoice == 3:
-                filename = "lap_times_3.txt"
-                print("The fastest lap for each driver in York is...")
-                break
-            else:
-                print("Invalid choice. Please select either 1, 2, or 3.")
-        
-        except ValueError:
-            print("Invalid input! Please enter a valid number (1, 2, or 3).")
-    
+def driver_lap_times(filename):
     while True:
         try:
             driverChoice = input("Please enter the driver code you would like to view lap times for: ")
@@ -318,37 +190,92 @@ def driver_lap_times():
         next(file)
         lap_number = 1
         for line in file:
-            driver = str(line[:3])
+            driver = str(line[:3]).strip()
             lap_time = float(line[3:].strip())
             if driver == driverChoice:
-                lap_data.append((lap_number, lap_time))
+                lap_data.append((driver, lap_number, lap_time))
                 lap_number += 1
 
     if lap_data:
-        headers = ["Lap Number", "Lap Time"]
+        headers = ["DRIVER", "LAP NUMBER", "LAP TIME"]
         print(tabulate(lap_data, headers=headers, tablefmt="fancy_grid"))
     else:
-        print("Driver has no lap times for selected race")
-    
-       
-if __name__ == "__main__":
+        print("Driver has no lap times for the selected race.")
 
+def get_file():
+    files = os.listdir()
+    excluded_files = ["f1_drivers.txt", "requirements.txt"]
+    txt_files = [file for file in files if file.endswith(".txt") and file not in excluded_files]
+    
+    if not txt_files:
+        print("No valid .txt files found in the current directory.")
+        sys.exit()
+
+    print("The following files are available:")
+    for index, file in enumerate(txt_files, 1):
+        print(f"{index}. {file}")
+
+    while True:
+        try:
+            choice = int(input("Please select the file you would like to use: "))
+            if 1 <= choice <= len(txt_files):  
+                filename = txt_files[choice - 1]
+                print(f"You selected: {filename}")
+                return filename
+            else:
+                print("Invalid choice. Please select a valid file number.")
+        
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+
+def change_file():
+    files = os.listdir()
+    excluded_files = ["f1_drivers.txt", "requirements.txt"]
+    txt_files = [file for file in files if file.endswith(".txt") and file not in excluded_files]
+    
+    if not txt_files:
+        print("No valid .txt files found in the current directory.")
+        return None
+
+    print("The following files are available:")
+    for index, file in enumerate(txt_files, 1):
+        print(f"{index}. {file}")
+
+    while True:
+        try:
+            choice = int(input("Please select the file you would like to use: "))
+            if 1 <= choice <= len(txt_files):
+                filename = txt_files[choice - 1]
+                print(f"You selected: {filename}")
+                return filename
+            else:
+                print("Invalid choice. Please select a valid file number.")
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="F1 Driver Management System")
     parser.add_argument("file_path", help="Path to the file containing driver data")
     args = parser.parse_args()
 
     create_drivers(args.file_path)
+    
     print("Welcome to the F1 Driver Management System")
+    
+    filename = get_file()
+
     while True:
         print("Please select an option:")
         print("1. View all drivers")
-        print("2. View the fastest lap of each race")
-        print("3. View the average lap time for each race")
-        print("4. View the lap standings for each race")
-        print("5. View the fastest lap for each driver in each race")
-        print("6. View the average lap time for each driver in each race")
+        print("2. View the fastest lap of the file")
+        print("3. View the average lap time for the file")
+        print("4. View the lap standings for the file")
+        print("5. View the fastest lap for each driver in the file")
+        print("6. View the average lap time for each driver in the file")
         print("7. View lap times for a specific driver")
-        print("8. Exit")
+        print("8. Change the race data file")
+        print("9. Exit")
         
         try:
             choice = int(input("Enter your choice ~ "))
@@ -356,21 +283,26 @@ if __name__ == "__main__":
             if choice == 1:
                 print_drivers()
             elif choice == 2:
-                fastest_lap_of_race()
+                fastest_lap_of_race(filename)
             elif choice == 3:
-                average_times()
+                average_times(filename)
             elif choice == 4:
-                lap_standings()
+                lap_standings(filename)
             elif choice == 5:
-                drivers_fastest_lap()
+                drivers_fastest_lap(filename)
             elif choice == 6:
-                drivers_average_time()
+                drivers_average_time(filename)
             elif choice == 7:
-                driver_lap_times()
+                driver_lap_times(filename)
             elif choice == 8:
+                filename = change_file()
+                if filename is None:
+                    print("No valid files available to select.")
+                    continue
+            elif choice == 9:
                 print("Exiting...")
                 sys.exit()
             else:
-                print("Invalid choice. Please select a number between 1 and 7.")
+                print("Invalid choice. Please select a number between 1 and 9.")
         except ValueError:
             print("Invalid input! Please enter a valid number.")
