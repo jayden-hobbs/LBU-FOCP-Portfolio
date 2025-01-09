@@ -9,4 +9,4 @@ if __name__ == '__main__':
         speed.append([mph, round(kmph, 2)])
     
     table = tabulate(speed, headers=["Miles per Hour", "Kilometres per Hour"], tablefmt="fancy_grid")
-    print(table)
+    print(table) 
