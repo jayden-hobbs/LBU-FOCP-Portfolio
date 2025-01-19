@@ -10,7 +10,7 @@
 ---
 
 
-## 📝 Purpose
+## 📝 This Repo Explained...
 
 This repo is my programming portfolio from my module in Fundamentals of Computer Programming at Leeds Beckett University. Each week we were given weekly practicals which you can find in the ``practicals``  folder organised by week. Then, inside the ``project ``  folder, is my code from the project we had to do. Mine was an F1 Driver Management system. The specs for this are in the folder with it. Finally, the ``exam``  folder contains the code that was carried out under exam conditions at the end of the module.
 
