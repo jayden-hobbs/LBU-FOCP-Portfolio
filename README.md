@@ -1,17 +1,33 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/j22zagSf)
-# Programming Porfolio
 
-## JAYDEN HOBBS
+## 🗂️ About This Repo
+[![Repo Size](https://img.shields.io/github/repo-size/jayden-hobbs/LBU-FOCP-Portfolio?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=brightgreen)](https://github.com/jayden-hobbs/LBU-FOCP-Portfolio)
+[![GitHub Issues](https://img.shields.io/github/issues/jayden-hobbs/LBU-FOCP-Portfolio?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=0078D4)](https://github.com/jayden-hobbs/LBU-FOCP-Portfolio/issues)
+[![GitHub Forks](https://img.shields.io/github/forks/jayden-hobbs/LBU-FOCP-Portfolio?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=FC6D26)](https://github.com/jayden-hobbs/LBU-FOCP-Portfolio/network)
+[![GitHub Stars](https://img.shields.io/github/stars/jayden-hobbs/LBU-FOCP-Portfolio?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=FFD700)](https://github.com/jayden-hobbs/LBU-FOCP-Portfolio/stargazers)
+[![GitHub License](https://img.shields.io/github/license/jayden-hobbs/LBU-FOCP-Portfolio?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=08C918)](https://github.com/jayden-hobbs/LBU-FOCP-Portfolio/blob/main/LICENSE)
 
-### FS4D
-### TONY JENKINS
 
-By submitting this work you are confirming that the work in this repo is your own. You are confirming that you agree to the statement in the ``README.md`` file in the ``assessment`` folder. 
+---
 
-You are also confirming that you have used no AI tools in the completion of the _Project_ work, except as specifically allowed in the statement on MyBeckett.
 
-You also confirm that you have read and understood the University's regulations relating to academic honesty.
+## 📝 Purpose
 
-**Do not change the folder structure in this repo.** 
+This repo is my programming portfolio from my module in Fundamentals of Computer Programming at Leeds Beckett University. Each week we were given weekly practicals which you can find in the ``practicals``  folder organised by week. Then, inside the ``project ``  folder, is my code from the project we had to do. Mine was an F1 Driver Management system. The specs for this are in the folder with it. Finally, the ``exam``  folder contains the code that was carried out under exam conditions at the end of the module.
 
-*Note: This repo contains a ``.gitignore`` file that should exclude most common files that are not needed in a Python repo. If you find that you are unable to commit a file that is important for your work, please check the ``.gitignore`` file.*
+---
+
+## 🖋️ Languages Used
+
+[![Python Badge](https://img.shields.io/badge/-Python-28A745?style=for-the-badge&logo=python&logoColor=white&labelColor=28A745&logoWidth=0&width=200&height=50)](https://www.python.org/)
+[![Kotlin Badge](https://img.shields.io/badge/-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white&labelColor=7F52FF&logoWidth=0&width=200&height=50)](https://kotlinlang.org/)
+[![Ruby Badge](https://img.shields.io/badge/-Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white&labelColor=CC342D&logoWidth=0&width=200&height=50)](https://www.ruby-lang.org/)
+[![Rust Badge](https://img.shields.io/badge/-Rust-000000?style=for-the-badge&logo=rust&logoColor=white&labelColor=000000&logoWidth=0&width=200&height=50)](https://www.rust-lang.org/)
+[![Java Badge](https://img.shields.io/badge/-Java-F8981D?style=for-the-badge&logo=java&logoColor=white&labelColor=F8981D&logoWidth=0&width=200&height=50)](https://www.java.com/)
+
+
+## 🔧 Tools Used
+[![Visual Studio Code](https://img.shields.io/badge/-VS%20Code-007ACC?style=for-the-badge&logo=visualstudio&logoColor=white)](https://code.visualstudio.com/)
+![Git](https://img.shields.io/badge/-Git-F05032?style=for-the-badge&logo=git&logoColor=white&labelColor=F05032&logoWidth=0&width=200&height=50)
+
+---
+
